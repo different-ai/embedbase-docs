@@ -181,16 +181,16 @@ const SearchModal = () => {
 };
 
 const config: DocsThemeConfig = {
-  logo: <span>My Project</span>,
+  logo: <span>Embedbase</span>,
   project: {
-    link: 'https://github.com/shuding/nextra-docs-template',
+    link: 'https://github.com/another-ai/embedbase',
   },
   chat: {
-    link: 'https://discord.com',
+    link: 'https://discord.gg/DYE6VFTJET',
   },
-  docsRepositoryBase: 'https://github.com/shuding/nextra-docs-template',
+  docsRepositoryBase: 'https://github.com/another-ai/embedbase-docs',
   footer: {
-    text: 'Nextra Docs Template',
+    text: 'Embedbase Nextra Docs',
   },
   search: {
     component: <SearchModal />
