@@ -1,0 +1,19 @@
+### Inserting data
+
+```ts
+const URL = 'https://embedbase-hosted-usx5gpslaq-uc.a.run.app';
+const VAULT_ID = 'people';
+const API_KEY = '<https://app.embedbase.com/signup>';
+fetch(`${URL}/v1/${VAULT_ID}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: "Bearer " + API_KEY,
+    },
+    body: JSON.stringify({
+      documents: [{
+        data: 'Elon is sipping a tea on Mars',
+      }],
+    }),
+  });
+```

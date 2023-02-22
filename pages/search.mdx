@@ -1,0 +1,17 @@
+### Searching
+
+```ts
+const URL = 'https://embedbase-hosted-usx5gpslaq-uc.a.run.app';
+const VAULT_ID = 'people';
+const API_KEY = '<https://app.embedbase.com/signup>';
+fetch(`${URL}/v1/${VAULT_ID}/search`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: "Bearer " + API_KEY,
+    },
+    body: JSON.stringify({
+      query: 'Something about a red planet',
+    }),
+  });
+```
