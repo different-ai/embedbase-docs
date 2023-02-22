@@ -9,7 +9,7 @@ if (!process.env.OPENAI_API_KEY) {
 // Load the tokenizer which is designed to work with the embedding model
 const enc = get_encoding('cl100k_base');
 const url = "https://embedbase-hosted-usx5gpslaq-uc.a.run.app";
-const vaultId = "documentation";
+const vaultId = "embedbase-documentation";
 const apiKey = process.env.EMBEDBASE_API_KEY;
 
 const search = async (query: string) => {
