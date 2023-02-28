@@ -251,7 +251,7 @@ const config: DocsThemeConfig = {
   },
   docsRepositoryBase: "https://github.com/another-ai/embedbase-docs",
   footer: {
-    text: "Embedbase Nextra Docs",
+    text: "Embedbase Docs",
   },
   search: {
     component: <SearchModal />,
