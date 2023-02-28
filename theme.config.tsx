@@ -254,7 +254,7 @@ const config: DocsThemeConfig = {
     text: "Embedbase Docs",
   },
   search: {
-    component: <div></div> 
+    component: <SearchModal />
   },
 };
 
