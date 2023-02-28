@@ -1,14 +1,20 @@
 ---
-title: Using Embedbase to build ChatGPT-powered Q&A for your website
+title: Create GPT-powered Q&A documentation
 description: Embedbase helps you deploy embeddings-powered applications to the cloud.
 ---
 
- You can also try this tutorial in [Javascript](/docs/qa-chat-js).
+## Create GPT-powered Q&A documentation
+
+>  This tutorial uses python. But, you can also check our [javascript](/docs/qa-chat-js) tutorial.
+
 
 Embedbase helps you deploy embeddings-powered applications to the cloud.
 
-This tutorial builds on top of the following [OpenAI tutorial](https://platform.openai.com/docs/tutorials/web-qa-embeddings).
+## What is it
 
+This tutorial helps you create a GPT-powered documentation with embedbase (try the search bar above). It  builds on top of the following [OpenAI tutorial](https://platform.openai.com/docs/tutorials/web-qa-embeddings).
+
+## How is it different from the OpenAI tutorial
 Below you'll find how you can change just a few lines of code and take the OpenAI tutorial from
 localhost to prod.
 
