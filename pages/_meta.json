@@ -3,10 +3,16 @@
   "sync": "Inserting data",
   "search": "Retrieving data",
   "tutorials": "Tutorials",
-  "contact": {
-    "title": "Contact ↗",
+  "login": {
+    "title": "Login",
     "type": "page",
-    "href": "mailto:ben@embedbase.xyz",
+    "href": "https://app.embedbase.xyz/login",
+    "newWindow": true
+  },
+  "signup": {
+    "title": "Signup ↗",
+    "type": "page",
+    "href": "https://embedbase.xyz",
     "newWindow": true
   }
 }

@@ -187,7 +187,7 @@ const SearchModal = () => {
         )}
 
         <div style={{ padding: "2rem" }}>
-          <ReactMarkdown>{output}</ReactMarkdown>
+          {output.length > 0 && <ReactMarkdown>{output}</ReactMarkdown>}
         </div>
 
         <div
@@ -254,7 +254,7 @@ const config: DocsThemeConfig = {
     text: "Embedbase Docs",
   },
   search: {
-    component: <SearchModal />,
+    component: <div></div> 
   },
 };
 
