@@ -1,6 +1,8 @@
 {
   "index": "Introduction",
   "tutorials": "Tutorials",
+  "sync": "Inserting data",
+  "search": "Retrieving data",
   "contact": {
     "title": "Contact ↗",
     "type": "page",
