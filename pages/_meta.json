@@ -1,8 +1,8 @@
 {
-  "index": "Introduction",
-  "sync": "Inserting data",
-  "search": "Retrieving data",
-  "tutorials": "Tutorials",
+  "index": "🎬 Start Here",
+  "basics": "🍊 Basics",
+  "tutorials": "❓ Tutorials",
+  "deployment": "🚚 Deployment",
   "login": {
     "title": "Login",
     "type": "page",

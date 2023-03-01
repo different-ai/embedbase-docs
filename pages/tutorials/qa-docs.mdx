@@ -27,14 +27,14 @@ Instead of storing embeddings locally, we send a simple request to the Embedbase
 ```python
 import requests
 
-VAULT_ID = "dev";
+DATASET_ID = "dev";
 URL = "https://embedbase-hosted-usx5gpslaq-uc.a.run.app";
 # find your Embedbase API key
 API_KEY = "<https://app.embedbase.xyz/dashboard>";
 
 async def embed(texts):
 	requests.post(
-		URL + "/v1/" + VAULT_ID,
+		URL + "/v1/" + DATASET_ID,
 		headers = {
 			"Authorization": "Bearer " + API_KEY,
 			"Content-Type": "application/json"
@@ -64,9 +64,9 @@ Here, we don't need to embed and search locally, Embedbase take care of it:
 import openai
 openai.api_key = "<https://platform.openai.com/account/api-keys>"
 
-def search(query, vault_id):
+def search(query, DATASET_ID):
 	return requests.post(
-		URL + "/v1/" + vault_id + "/search",
+		URL + "/v1/" + DATASET_ID + "/search",
 		headers = {
 			"Authorization": "Bearer " + API_KEY,
 			"Content-Type": "application/json"
@@ -82,7 +82,7 @@ def create_context(
     """
     Create a context for a question by finding the most similar context from the dataframe
     """
-    search_response = search(question, VAULT_ID).json()
+    search_response = search(question, DATASET_ID).json()
     cur_len = 0
     returns = []
     # Add the text to the context until the context is too long
