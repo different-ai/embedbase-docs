@@ -41,7 +41,7 @@ const Modal = ({ children, open, onClose }) => {
 
 const questions = ["What is Embedbase?"];
 
-interface NiceSearchBarProps {
+interface EmbedbaseSearchBarProps {
   value?: string;
   onChange?: (e: any) => void;
   autoFocus?: boolean;
@@ -49,13 +49,13 @@ interface NiceSearchBarProps {
   onClick?: () => void;
 }
 
-const NiceSearchBar = ({
+const EmbedbaseSearchBar = ({
   value,
   onChange,
   autoFocus,
   placeholder,
   onClick,
-}: NiceSearchBarProps) => {
+}: EmbedbaseSearchBarProps) => {
   return (
     // a magnifier icon on the left
     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
@@ -148,30 +148,26 @@ const SearchModal = () => {
   return (
     <div>
       {/* on click, open modal */}
-      <NiceSearchBar
+      <EmbedbaseSearchBar
         onClick={() => setOpen(true)}
         placeholder="Ask a question..."
       />
       <Modal open={open} onClose={onClose}>
-        <form onSubmit={qa}>
-          <NiceSearchBar
+        <form onSubmit={qa} className="nx-flex nx-gap-3">
+          <EmbedbaseSearchBar
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             autoFocus
           />
-          {/* <button type="submit">Ask</button> */}
-        </form>
-        {/* a spinner alongside a "loading" label when loading */}
-        {/* the spinner is centered vertically and horizontally in the parent */}
-        {loading && (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              paddingTop: "1rem",
-            }}
+          <button
+            className="nx-rounded-full nx-bg-sky-300 nx-py-2 nx-px-4 nx-text-sm nx-font-semibold nx-text-slate-900 nx-hover:nx-bg-sky-200 nx-focus:outline-none focus-visible:outline-2 focus-visible:nx-outline-offset-2 nx-focus-visible:nx-outline-sky-300/50 nx-active:bg-sky-500 nx-max-w-max"
+            type="submit"
           >
+            Ask
+          </button>
+        </form>
+        {loading && (
+          <div className="nx-flex nx-gap-3 nx-justify-center">
             <span>Loading...</span>
             <div
               style={{
@@ -197,7 +193,7 @@ const SearchModal = () => {
           }}
         >
           {/* try one of these samples */}
-          <div style={{ marginTop: "1rem" }}>Try one of these samples:</div>
+          <div className="nx-mt-2 ">Try one of these samples:</div>
           <div
             style={{
               cursor: "pointer",
@@ -254,7 +250,7 @@ const config: DocsThemeConfig = {
     text: "Embedbase Docs",
   },
   search: {
-    component: <SearchModal />
+    component: <SearchModal />,
   },
 };
 
