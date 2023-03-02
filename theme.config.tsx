@@ -58,26 +58,24 @@ const EmbedbaseSearchBar = ({
 }: EmbedbaseSearchBarProps) => {
   return (
     // a magnifier icon on the left
-    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-      <input
-        autoFocus={autoFocus || false}
-        placeholder={placeholder || "Search..."}
-        onClick={onClick}
-        type="text"
-        value={value}
-        onChange={onChange}
-        // border around with smooth corners, a magnifier icon on the left,
-        // the search bar taking up the rest of the space
-        // focused on load
-        style={{
-          width: "100%",
-          padding: "0.5rem",
-          border: "1px solid #e5e7eb",
-          borderRadius: "0.5rem",
-          outline: "none",
-        }}
-      />
-    </div>
+    <input
+      autoFocus={autoFocus || false}
+      placeholder={placeholder || "Search..."}
+      onClick={onClick}
+      type="text"
+      value={value}
+      onChange={onChange}
+      // border around with smooth corners, a magnifier icon on the left,
+      // the search bar taking up the rest of the space
+      // focused on load
+      style={{
+        width: "100%",
+        padding: "0.5rem",
+        border: "1px solid #e5e7eb",
+        borderRadius: "0.5rem",
+        outline: "none",
+      }}
+    />
   );
 };
 
@@ -156,34 +154,38 @@ const SearchModal = () => {
         <form onSubmit={qa} className="nx-flex nx-gap-3">
           <EmbedbaseSearchBar
             value={prompt}
+            placeholder="Ask a question..."
             onChange={(e) => setPrompt(e.target.value)}
             autoFocus
           />
-          <button
-            className="nx-rounded-full nx-bg-sky-300 nx-py-2 nx-px-4 nx-text-sm nx-font-semibold nx-text-slate-900 nx-hover:nx-bg-sky-200 nx-focus:outline-none focus-visible:outline-2 focus-visible:nx-outline-offset-2 nx-focus-visible:nx-outline-sky-300/50 nx-active:bg-sky-500 nx-max-w-max"
-            type="submit"
-          >
+          <button style={{ marginLeft: "1rem" }} type="submit">
             Ask
           </button>
         </form>
-        {loading && (
-          <div className="nx-flex nx-gap-3 nx-justify-center">
-            <span>Loading...</span>
-            <div
-              style={{
-                width: "1rem",
-                height: "1rem",
-                border: "1px solid #e5e7eb",
-                borderRadius: "50%",
-                borderTopColor: "black",
-                animation: "spin 1s linear infinite",
-              }}
-            ></div>
-          </div>
-        )}
-
-        <div style={{ padding: "2rem" }}>
-          {output.length > 0 && <ReactMarkdown>{output}</ReactMarkdown>}
+        <div className="nx-flex nx-gap-3 nx-py-4 nx-items-center nx-min-h-40">
+          {!loading && output.length < 1 && (
+            <div className="nx-text-gray-400	nx-text-sm nx-font-semibold">
+              Your result will appear here
+            </div>
+          )}
+          {loading && (
+            <>
+              <span>Loading...</span>
+              <div
+                style={{
+                  width: "1rem",
+                  height: "1rem",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "50%",
+                  borderTopColor: "black",
+                  animation: "spin 1s linear infinite",
+                }}
+              ></div>
+            </>
+          )}
+          {!loading && output.length > 0 && (
+            <ReactMarkdown>{output}</ReactMarkdown>
+          )}
         </div>
 
         <div
@@ -205,7 +207,9 @@ const SearchModal = () => {
             }}
           >
             {questions.map((q) => (
-              <div onClick={() => setPrompt(q)}>{q}</div>
+              <div key={q} onClick={() => setPrompt(q)}>
+                {q}
+              </div>
             ))}
           </div>
           <div
