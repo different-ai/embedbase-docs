@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 
 const url = "https://embedbase-hosted-usx5gpslaq-uc.a.run.app";
-const vaultId = "documentation";
+const vaultId = "embedbase-documentation";
 try {
     require("dotenv").config();
 } catch (e) {

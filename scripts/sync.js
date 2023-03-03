@@ -3,7 +3,7 @@ const fs = require("fs");
 const fetch = require("node-fetch");
 
 const url = "https://embedbase-hosted-usx5gpslaq-uc.a.run.app";
-const vaultId = "documentation";
+const vaultId = "embedbase-documentation";
 try {
     require("dotenv").config();
 } catch (e) {
@@ -41,7 +41,7 @@ const sync = async () => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            documents: documents
+            documents: chunks
         })
     });
     const data = await response.json();

@@ -27,6 +27,7 @@ const search = async (query: string) => {
 
 const createContext = async (question: string, maxLen = 1800) => {
     const searchResponse = await search(question);
+    console.log(searchResponse);
     let curLen = 0;
     const returns = [];
     for (const similarity of searchResponse["similarities"]) {
