@@ -1,11 +1,13 @@
 {
   "name": "embedbase-docs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Embedbase Nextra docs",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "sync": "node scripts/sync.js",
+    "clear": "node scripts/clear.js"
   },
   "repository": {
     "type": "git",
