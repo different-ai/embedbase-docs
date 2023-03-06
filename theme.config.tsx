@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DocsThemeConfig } from "nextra-theme-docs";
+import { DocsThemeConfig, useTheme } from "nextra-theme-docs";
 import ReactMarkdown from "react-markdown";
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx'
@@ -63,6 +63,7 @@ const MarkdownComponents: object = {
 
 
 const Modal = ({ children, open, onClose }) => {
+  const theme = useTheme();
   if (!open) return null;
   return (
     <div
@@ -83,7 +84,7 @@ const Modal = ({ children, open, onClose }) => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          backgroundColor: "white",
+          backgroundColor: theme.resolvedTheme === "dark" ? "#1a1a1a" : "white",
           padding: 20,
           borderRadius: 5,
           width: "80%",
@@ -274,12 +275,12 @@ const SearchModal = () => {
             className="nx-flex-row"
           >
             <ul>
-            {questions.map((q) => (
-              // in row orientation, centered, with a gap of 3
-              <li key={q} onClick={() => setPrompt(q)}>
-                - {q}
-              </li>
-            ))}
+              {questions.map((q) => (
+                // in row orientation, centered, with a gap of 3
+                <li key={q} onClick={() => setPrompt(q)}>
+                  - {q}
+                </li>
+              ))}
             </ul>
           </div>
           <div
