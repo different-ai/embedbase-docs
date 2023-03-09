@@ -3,7 +3,7 @@
   "sdk": "☕️ Javascript SDK",
   "interface": "📡 API",
   "tutorials": "❓ Tutorials",
-  "deployment": "🚚 Self-hosting",
+  "self-hosting": "🚚 Self-hosting",
   "login": {
     "title": "Login",
     "type": "page",
@@ -15,6 +15,5 @@
     "type": "page",
     "href": "https://embedbase.xyz",
     "newWindow": true
-  },
-  "customisation": "🔨 Customisation"
+  }
 }
