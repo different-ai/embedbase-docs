@@ -1,46 +1,43 @@
 import React, { useState } from "react";
-import { DocsThemeConfig, useTheme } from "nextra-theme-docs";
+import { DocsThemeConfig, useTheme, useConfig } from "nextra-theme-docs";
 import ReactMarkdown from "react-markdown";
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
-import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx'
-import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript'
-import scss from 'react-syntax-highlighter/dist/cjs/languages/prism/scss'
-import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash'
-import markdown from 'react-syntax-highlighter/dist/cjs/languages/prism/markdown'
-import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json'
-import rangeParser from 'parse-numeric-range'
-import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
+import tsx from "react-syntax-highlighter/dist/cjs/languages/prism/tsx";
+import typescript from "react-syntax-highlighter/dist/cjs/languages/prism/typescript";
+import scss from "react-syntax-highlighter/dist/cjs/languages/prism/scss";
+import bash from "react-syntax-highlighter/dist/cjs/languages/prism/bash";
+import markdown from "react-syntax-highlighter/dist/cjs/languages/prism/markdown";
+import json from "react-syntax-highlighter/dist/cjs/languages/prism/json";
+import rangeParser from "parse-numeric-range";
+import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
-SyntaxHighlighter.registerLanguage('tsx', tsx)
-SyntaxHighlighter.registerLanguage('typescript', typescript)
-SyntaxHighlighter.registerLanguage('scss', scss)
-SyntaxHighlighter.registerLanguage('bash', bash)
-SyntaxHighlighter.registerLanguage('markdown', markdown)
-SyntaxHighlighter.registerLanguage('json', json)
+SyntaxHighlighter.registerLanguage("tsx", tsx);
+SyntaxHighlighter.registerLanguage("typescript", typescript);
+SyntaxHighlighter.registerLanguage("scss", scss);
+SyntaxHighlighter.registerLanguage("bash", bash);
+SyntaxHighlighter.registerLanguage("markdown", markdown);
+SyntaxHighlighter.registerLanguage("json", json);
 
 const MarkdownComponents: object = {
   code({ node, inline, className, ...props }) {
-
-    const match = /language-(\w+)/.exec(className || '')
-    const hasMeta = node?.data?.meta
+    const match = /language-(\w+)/.exec(className || "");
+    const hasMeta = node?.data?.meta;
 
     const applyHighlights: object = (applyHighlights: number) => {
       if (hasMeta) {
-        const RE = /{([\d,-]+)}/
-        const metadata = node.data.meta?.replace(/\s/g, '')
-        const strlineNumbers = RE?.test(metadata)
-          ? RE?.exec(metadata)[1]
-          : '0'
-        const highlightLines = rangeParser(strlineNumbers)
-        const highlight = highlightLines
+        const RE = /{([\d,-]+)}/;
+        const metadata = node.data.meta?.replace(/\s/g, "");
+        const strlineNumbers = RE?.test(metadata) ? RE?.exec(metadata)[1] : "0";
+        const highlightLines = rangeParser(strlineNumbers);
+        const highlight = highlightLines;
         const data: string = highlight.includes(applyHighlights)
-          ? 'highlight'
-          : null
-        return { data }
+          ? "highlight"
+          : null;
+        return { data };
       } else {
-        return {}
+        return {};
       }
-    }
+    };
 
     return match ? (
       <SyntaxHighlighter
@@ -57,10 +54,9 @@ const MarkdownComponents: object = {
       />
     ) : (
       <code className={className} {...props} />
-    )
+    );
   },
-}
-
+};
 
 const Modal = ({ children, open, onClose }) => {
   const theme = useTheme();
@@ -102,7 +98,7 @@ const Modal = ({ children, open, onClose }) => {
 
 const questions = [
   "What is Embedbase?",
-  "How can I insert data into Embedbase in Javascript? (code block)"
+  "How can I insert data into Embedbase in Javascript? (code block)",
 ];
 
 interface EmbedbaseSearchBarProps {
@@ -249,9 +245,9 @@ const SearchModal = () => {
             </div>
           )}
           {!loading && output.length > 0 && (
-            <ReactMarkdown
-              components={MarkdownComponents}
-            >{output}</ReactMarkdown>
+            <ReactMarkdown components={MarkdownComponents}>
+              {output}
+            </ReactMarkdown>
           )}
         </div>
 
@@ -313,7 +309,43 @@ const SearchModal = () => {
 };
 
 const config: DocsThemeConfig = {
-  logo: <span>Embedbase</span>,
+  logo: (
+    <img
+      src={"/embedbase-long.svg"}
+      alt="Embedbase Logo"
+      className="max-h-[60px]"
+    />
+  ),
+  head: function useHead() {
+    const config = useConfig<{ description?: string; image?: string }>();
+    const description =
+      config.frontMatter.description ||
+      "Embedbase is a suite of open-source tools to help developers use ML embeddings.";
+    const image = config.frontMatter.image || "embedbasejs.png";
+    return (
+      <>
+        {/* Favicons, meta */}
+
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon/favicon-32x32.png"
+        />
+
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta httpEquiv="Content-Language" content="en" />
+        <meta name="description" content={description} />
+        <meta name="og:description" content={description} />
+        <meta name="twitter:card" content="summary_large_image" />
+        {/* <meta name="twitter:site" content="@embedbase" /> */}
+        <meta name="twitter:image" content={image} />
+        <meta name="og:title" content={`${config.title} – embedbase`} />
+        <meta name="og:image" content={image} />
+        <meta name="apple-mobile-web-app-title" content="embedbase" />
+      </>
+    );
+  },
   project: {
     link: "https://github.com/another-ai/embedbase",
   },
