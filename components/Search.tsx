@@ -105,12 +105,10 @@ const questions = [
 
 const QuestionSection = () => {
   return (
-    <div className="font-gray-500 my-4 flex flex-col text-xs">
-      <div className="text-cs font-gray-500">
-        Copy/paste one of the example below:
-      </div>
+    <div className="font-gray-500 flex flex-col text-sm">
+      <div className="font-gray-500">Copy/paste one of the example below into the search bar:</div>
       <div className="flex flex-col gap-2">
-        <ul>
+        <ul className="list-inside list-disc">
           {questions.map(q => (
             // in row orientation, centered, with a gap of 3
             <li key={q}>{q}</li>
@@ -218,8 +216,7 @@ export const EmbedbaseSearch = () => {
   // on open, show a modal with a form to enter a prompt
   return (
     <div>
-      <QuestionSection />
-      <form onSubmit={qa} className="flex gap-3">
+      <form onSubmit={qa} className="flex gap-3 mt-3">
         <TextField
           value={prompt}
           placeholder="Ask a question..."
@@ -246,7 +243,7 @@ export const EmbedbaseSearch = () => {
         {/* row oriented, centered, with a gap of 3 */}
         {!loading && output.length < 1 && (
           <div className="flex	min-h-[300px] items-center justify-center text-sm font-semibold text-gray-400">
-            Your result will appear here
+            <QuestionSection />
           </div>
         )}
         {loading && (

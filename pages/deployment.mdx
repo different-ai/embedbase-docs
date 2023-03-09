@@ -1,4 +1,4 @@
-# Embedbase self-hosted
+# Self-hosting Embedbase
 
 For any help or assistance with deployment, [book a demo](https://cal.com/potato/20min) and we will help you deploy your own instance.
 
@@ -7,66 +7,66 @@ For any help or assistance with deployment, [book a demo](https://cal.com/potato
 1. Create a supabase project on https://supabase.com
 2. Go to SQL Editor and run the following query to create the table
 
-  ```sql
-  create table documents (
-    id text primary key,
-    data text,
-    embedding vector (1536),
-    hash text,
-    namespace text
-  );
-  ```
+```sql
+create table documents (
+  id text primary key,
+  data text,
+  embedding vector (1536),
+  hash text,
+  namespace text
+);
+```
 
 3. Create the search database function
-  
-  ```sql
-  create or replace function match_documents (
-    query_embedding vector(1536),
-    similarity_threshold float,
-    match_count int,
-    query_namespace text
-  )
-  returns table (
-    id text,
-    data text,
-    score float,
-    hash text,
-    embedding vector(1536)
-  )
-  language plpgsql
-  as $$
-  begin
-    return query
-    select
-      documents.id,
-      documents.data,
-      (1 - (documents.embedding <=> query_embedding)) as similarity,
-      documents.hash,
-      documents.embedding
-    from documents
-    where 1 - (documents.embedding <=> query_embedding) > similarity_threshold and query_namespace = documents.namespace
-    order by documents.embedding <=> query_embedding
-    limit match_count;
-  end;
-  $$;
-  ```
+
+```sql
+create or replace function match_documents (
+  query_embedding vector(1536),
+  similarity_threshold float,
+  match_count int,
+  query_namespace text
+)
+returns table (
+  id text,
+  data text,
+  score float,
+  hash text,
+  embedding vector(1536)
+)
+language plpgsql
+as $$
+begin
+  return query
+  select
+    documents.id,
+    documents.data,
+    (1 - (documents.embedding <=> query_embedding)) as similarity,
+    documents.hash,
+    documents.embedding
+  from documents
+  where 1 - (documents.embedding <=> query_embedding) > similarity_threshold and query_namespace = documents.namespace
+  order by documents.embedding <=> query_embedding
+  limit match_count;
+end;
+$$;
+```
 
 4. Create the index
 
-  ```sql
-  create index on documents 
-  using ivfflat (embedding vector_cosine_ops)
-  with (lists = 100);
-  ```
+```sql
+create index on documents
+using ivfflat (embedding vector_cosine_ops)
+with (lists = 100);
+```
 
 5. Add the following to your config.yaml file
 
 ```yaml
 vector_database: supabase
-supabase_url: "<get me here https://supabase.com>"
-supabase_key: "<get me here https://supabase.com>"
-openai_api_key: "<get me here https://platform.openai.com/account/api-keys>"
-openai_organization: "<get me here https://platform.openai.com/account/org-settings>"
+supabase_url: '<get me here https://supabase.com>'
+supabase_key: '<get me here https://supabase.com>'
+openai_api_key: '<get me here https://platform.openai.com/account/api-keys>'
+openai_organization: '<get me here https://platform.openai.com/account/org-settings>'
 ```
 
 🎉 Now you should be able to run Embedbase with Supabase
@@ -81,11 +81,11 @@ Create an index on https://app.pinecone.io/ and add the index name to the config
 
 ```yaml
 vector_database: pinecone
-pinecone_index: "<get me here https://app.pinecone.io>"
-pinecone_environment: "<get me here https://app.pinecone.io>"
-pinecone_api_key: "<get me here https://app.pinecone.io>"
-openai_api_key: "<get me here https://platform.openai.com/account/api-keys>"
-openai_organization: "<get me here https://platform.openai.com/account/org-settings>"
+pinecone_index: '<get me here https://app.pinecone.io>'
+pinecone_environment: '<get me here https://app.pinecone.io>'
+pinecone_api_key: '<get me here https://app.pinecone.io>'
+openai_api_key: '<get me here https://platform.openai.com/account/api-keys>'
+openai_organization: '<get me here https://platform.openai.com/account/org-settings>'
 ```
 
 🎉 Now you should be able to run Embedbase with Pinecone
@@ -97,7 +97,6 @@ docker-compose up
 ## Cloud Run deployment
 
 Embedbase makes it easy for you to deploy your own instance. This assures you're in control of your data end to end.
-
 
 ### Setup
 
