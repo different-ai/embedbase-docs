@@ -63,6 +63,10 @@ npm i embedbase-js
 import { createClient } from 'embedbase-js'
 
 // you can find the api key at https://embedbase.xyz
+const apiKey = 'your api key'
+// this is using the hosted instance
+const url = 'https://api.embedbase.xyz'
+
 const embedbase = createClient(url, apiKey)
 ```
 
@@ -108,11 +112,7 @@ console.log(data)
 //   "id": "eiew823",
 //   "data": "Lightweight. Telescopic. Easy zipper case for storage.
 //          Didn't put in dishwasher. Still perfect after many uses."
-//    "metadata": {
-//      "created_at": "2020-10-29T12:00:00.000Z",
-//      "updated_at": "2020-10-29T12:00:00.000Z"
-//      "location": "https://app.embedbase.xyz/datasets/amazon-reviews/
-//    }
+//     }
 // }
 ```
 
