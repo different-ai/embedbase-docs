@@ -30,7 +30,8 @@ For any help or assistance with deployment, [book a demo](https://cal.com/potato
     id text,
     data text,
     score float,
-    hash text
+    hash text,
+    embedding vector(1536)
   )
   language plpgsql
   as $$
@@ -40,7 +41,8 @@ For any help or assistance with deployment, [book a demo](https://cal.com/potato
       documents.id,
       documents.data,
       (1 - (documents.embedding <=> query_embedding)) as similarity,
-      documents.hash
+      documents.hash,
+      documents.embedding
     from documents
     where 1 - (documents.embedding <=> query_embedding) > similarity_threshold and query_namespace = documents.namespace
     order by documents.embedding <=> query_embedding
