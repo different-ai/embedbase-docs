@@ -98,9 +98,26 @@ const Modal = ({ children, open, onClose }) => {
 }
 
 const questions = [
+  'What can you build with Embedbase?',
   'What is Embedbase?',
   'How can I insert data into Embedbase in Javascript? (code block)'
 ]
+
+const QuestionSection = () => {
+  return (
+    <div className="my-4 flex flex-col text-xs font-gray-500">
+      <div className="text-cs font-gray-500">Copy/paste one of the example below.</div>
+      <div className="flex flex-col gap-2">
+        <ul>
+          {questions.map(q => (
+            // in row orientation, centered, with a gap of 3
+            <li key={q}>- {q}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
 
 interface TextFieldProps {
   value?: string
@@ -199,6 +216,7 @@ export const EmbedbaseSearch = () => {
   // on open, show a modal with a form to enter a prompt
   return (
     <div>
+      <QuestionSection />
       <form onSubmit={qa} className="flex gap-3">
         <TextField
           value={prompt}
@@ -214,15 +232,23 @@ export const EmbedbaseSearch = () => {
           Ask a question
         </PrimaryButton>
       </form>
-      {/* row oriented, centered, with a gap of 3 */}
+
       <div className="nx-flex nx-gap-3 nx-py-4 nx-min-h-40 nx-flex-col">
+        <a
+          href="https://embedbase.xyz"
+          className="text-xs  text-gray-500 dark:text-white"
+        >
+          Powered by Embedbase
+        </a>
+
+        {/* row oriented, centered, with a gap of 3 */}
         {!loading && output.length < 1 && (
-          <div className="nx-text-gray-400	nx-text-sm nx-font-semibold">
+          <div className="flex	min-h-[300px] items-center justify-center text-sm font-semibold text-gray-400">
             Your result will appear here
           </div>
         )}
         {loading && (
-          <div className="nx-flex nx-items-center nx-justify-center">
+          <div className="flex items-center justify-center">
             <span>Loading...</span>
             <div
               style={{
@@ -241,59 +267,6 @@ export const EmbedbaseSearch = () => {
             {output}
           </ReactMarkdown>
         )}
-      </div>
-
-      <div
-        style={{
-          borderTop: '1px solid #e5e7eb',
-          marginTop: '1rem'
-        }}
-      >
-        <div className="nx-mt-2">Try one of these samples:</div>
-        <div
-          style={{
-            cursor: 'pointer',
-            fontSize: '0.9rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            fontWeight: 600
-          }}
-          // examples as a list of bullets
-          className="nx-flex-row"
-        >
-          <ul>
-            {questions.map(q => (
-              // in row orientation, centered, with a gap of 3
-              <li key={q} onClick={() => setPrompt(q)}>
-                - {q}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: '0.5rem 0',
-            fontSize: '0.75rem'
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.25rem',
-              paddingTop: '0.5rem',
-              paddingBottom: '0.25rem'
-            }}
-          >
-            <a href="https://embedbase.xyz" className="underline">
-              Powered by Embedbase
-            </a>
-          </div>
-        </div>
       </div>
     </div>
   )
