@@ -10,6 +10,7 @@ import markdown from 'react-syntax-highlighter/dist/cjs/languages/prism/markdown
 import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json'
 import rangeParser from 'parse-numeric-range'
 import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import { PrimaryButton } from './Button'
 
 SyntaxHighlighter.registerLanguage('tsx', tsx)
 SyntaxHighlighter.registerLanguage('typescript', typescript)
@@ -198,17 +199,20 @@ export const EmbedbaseSearch = () => {
   // on open, show a modal with a form to enter a prompt
   return (
     <div>
-      <form onSubmit={qa} className="nx-flex nx-gap-3">
+      <form onSubmit={qa} className="flex gap-3">
         <TextField
           value={prompt}
           placeholder="Ask a question..."
           onChange={e => setPrompt(e.target.value)}
           autoFocus
         />
-
-        <button style={{ marginLeft: '1rem' }} type="submit">
-          Ask
-        </button>
+        <PrimaryButton
+          style={{ minWidth: 'max-content' }}
+          type="submit"
+          className=""
+        >
+          Ask a question
+        </PrimaryButton>
       </form>
       {/* row oriented, centered, with a gap of 3 */}
       <div className="nx-flex nx-gap-3 nx-py-4 nx-min-h-40 nx-flex-col">
