@@ -321,7 +321,7 @@ const config: DocsThemeConfig = {
     const description =
       config.frontMatter.description ||
       "Embedbase is a suite of open-source tools to help developers use ML embeddings.";
-    const image = config.frontMatter.image || "embedbasejs.png";
+    const image = config.frontMatter.image || "/embedbasejs.png";
     return (
       <>
         {/* Favicons, meta */}
@@ -347,12 +347,12 @@ const config: DocsThemeConfig = {
     );
   },
   project: {
-    link: "https://github.com/another-ai/embedbase",
+    link: "https://github.com/different-ai/embedbase",
   },
   chat: {
     link: "https://discord.gg/DYE6VFTJET",
   },
-  docsRepositoryBase: "https://github.com/another-ai/embedbase-docs",
+  docsRepositoryBase: "https://github.com/different-ai/embedbase-docs",
   footer: {
     text: "Embedbase Docs",
   },
