@@ -1,4 +1,4 @@
-⚠️🔥 (sdk is still in private, if you want to have early access contact me at [email](mailto:ben@embedbase.xyz)
+⚠️🔥 (sdk is still in alpha, if you if you have some feedback readch out to [ben@embedbase.xyz](mailto:ben@embedbase.xyz)
 
 ## Embedbase
 
@@ -8,8 +8,8 @@ Embedbase is an open-source API to compute ML embeddings. This SDK makes it easy
 
 - [What is it](#what-is-it)
 - [Installation](#installation)
-- [Fetching Embeddings](#fetching-embeddings)
-- [Adding Data](#adding-data)
+- [Searching](#fetching-embeddings)
+- [Adding data](#adding-data)
 - [Creating a recommendation engine with zero ML experience](#how-to-create-a-reccomendation-engine)
 
 ## Design philosophy
@@ -20,12 +20,12 @@ Embedbase is an open-source API to compute ML embeddings. This SDK makes it easy
 
 ## What's Included
 
-- [x] Hosted Instance Working on top of Supabase. [Sign Up](https://embedbase.xyz)
-- [x] Authentication and Authorization. [Docs](https://docs.embedbase.com/auth)
-- [x] Typescript SDK. [Docs](https://docs.embedbase.com/sdk)
+- [x] Hosted Instance Working on top of Embedbase. [Sign Up](https://embedbase.xyz)
+- [x] Authentication and Authorization. [Docs](https://docs.embedbase.xyz/auth)
+- [x] Typescript SDK. [Docs](https://docs.embedbase.xyz/sdk)
   - [x] Server-side embeddings computation
   - [ ] Local embeddings computation
-- [x] Dashboard [Docs](https://docs.embedbase.com/dashboard)
+- [x] Dashboard [Docs](https://docs.embedbase.xyz/dashboard)
   - [x] Search Datasets
   - [x] Use the playground to get started
   - [ ] Visualize datasets (coming soon)
@@ -47,41 +47,30 @@ This is the official typescript client for Embedbase. Embedbase is an open-sourc
 
 ## Installation
 
-You can install @embedbase/embedbase-js via the terminal.
+You can install embedbase-js via the terminal.
 
-```sh
-npm install @embedbase/embedbase-js
+```
+npm i embedbase-js
 ```
 
 ### Initializing
 
 ```ts
-import { createClient } from "@embedbase/embedbase-js";
-import { initPostgres } from "@embedbase/db/postgres";
+import { createClient } from 'embedbase-js'
 
-initPostgres("postgres://localhost:5432/embedbase");
-
-// you can find the api key at https://embedbase.com
-// you can find a list of supported dbs at https://docs.embedbase.com/dbs
-const embedbase = createClient("api-key", {
-  // if you leave the db field empty, it will use embedbase's db
-  db: postgres,
-  embedbaseURL: "https://app.embedbase.com",
-  // this allows you to add plugins to the client
-  // and gives you access to `.recommend`
-  plugins: ["@embedbase/recommendation-engine"],
-});
+// you can find the api key at https://embedbase.xyz
+const embedbase = createClient(url, apiKey)
 ```
 
 ### Fetching Embeddings
 
 ```ts
 // fetching data
-const { data, error } = await embedbase
-  .dataset("amazon-reviews")
-  .search("best hot dogs accessories", { limit: 3 });
+const data = await embedbase
+  .dataset('amazon-reviews')
+  .search('best hot dogs accessories', { limit: 3 })
 
-console.log(data);
+console.log(data)
 // [
 //   {
 //       "similarity": 0.810843349,
@@ -101,15 +90,15 @@ console.log(data);
 ### Adding Data
 
 ```js
-const { data, error } =
+const data =
   await // embeddings are extremely good for retrieving unstructured data
   // in this example we store an unparsable html string
-  embedbase.dataset("amazon-reviews").add(`
+  embedbase.dataset('amazon-reviews').add(`
   <div>
     <span>Lightweight. Telescopic. Easy zipper case for storage. Didn't put in dishwasher. Still perfect after many uses.</span>
-`);
+`)
 
-console.log(data);
+console.log(data)
 //
 // {
 //   "id": "eiew823",
@@ -118,7 +107,7 @@ console.log(data);
 //    "metadata": {
 //      "created_at": "2020-10-29T12:00:00.000Z",
 //      "updated_at": "2020-10-29T12:00:00.000Z"
-//      "location": "https://app.embedbase.com/datasets/amazon-reviews/
+//      "location": "https://app.embedbase.xyz/datasets/amazon-reviews/
 //    }
 // }
 ```

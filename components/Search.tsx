@@ -105,13 +105,15 @@ const questions = [
 
 const QuestionSection = () => {
   return (
-    <div className="my-4 flex flex-col text-xs font-gray-500">
-      <div className="text-cs font-gray-500">Copy/paste one of the example below.</div>
+    <div className="font-gray-500 my-4 flex flex-col text-xs">
+      <div className="text-cs font-gray-500">
+        Copy/paste one of the example below:
+      </div>
       <div className="flex flex-col gap-2">
         <ul>
           {questions.map(q => (
             // in row orientation, centered, with a gap of 3
-            <li key={q}>- {q}</li>
+            <li key={q}>{q}</li>
           ))}
         </ul>
       </div>
@@ -233,7 +235,7 @@ export const EmbedbaseSearch = () => {
         </PrimaryButton>
       </form>
 
-      <div className="nx-flex nx-gap-3 nx-py-4 nx-min-h-40 nx-flex-col">
+      <div className="nx-py-4 min-h-40 flex flex-col gap-3">
         <a
           href="https://embedbase.xyz"
           className="text-xs  text-gray-500 dark:text-white"
@@ -248,7 +250,7 @@ export const EmbedbaseSearch = () => {
           </div>
         )}
         {loading && (
-          <div className="flex items-center justify-center">
+          <div className="flex	min-h-[300px] items-center justify-center text-sm font-semibold text-gray-400">
             <span>Loading...</span>
             <div
               style={{

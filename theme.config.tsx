@@ -1,24 +1,26 @@
-import React from "react";
-import { DocsThemeConfig, useConfig } from "nextra-theme-docs";
-import { SearchModal } from "./components/Search";
+import React from 'react'
+import { DocsThemeConfig, useConfig } from 'nextra-theme-docs'
+import { SearchModal } from './components/Search'
 
 const config: DocsThemeConfig = {
   logo: (
     <img
-      src={"/embedbase-long.svg"}
+      src={'/embedbase-long.svg'}
       alt="Embedbase Logo"
       className="max-h-[60px]"
     />
   ),
   head: function useHead() {
-    const config = useConfig<{ description?: string; image?: string }>();
+    const config = useConfig<{ description?: string; image?: string }>()
     const description =
       config.frontMatter.description ||
-      "Embedbase is a suite of open-source tools to help developers use ML embeddings.";
-    const image = config.frontMatter.image || "/embedbasejs.png";
+      'Embedbase is a suite of open-source tools to help developers use ML embeddings.'
+    const image = config.frontMatter.image || '/embedbasejs.png'
     return (
       <>
         {/* Favicons, meta */}
+
+        <title>Embedbase Documentation</title>
 
         <link
           rel="icon"
@@ -38,21 +40,21 @@ const config: DocsThemeConfig = {
         <meta name="og:image" content={image} />
         <meta name="apple-mobile-web-app-title" content="embedbase" />
       </>
-    );
+    )
   },
   project: {
-    link: "https://github.com/different-ai/embedbase",
+    link: 'https://github.com/different-ai/embedbase'
   },
   chat: {
-    link: "https://discord.gg/DYE6VFTJET",
+    link: 'https://discord.gg/DYE6VFTJET'
   },
-  docsRepositoryBase: "https://github.com/different-ai/embedbase-docs",
+  docsRepositoryBase: 'https://github.com/different-ai/embedbase-docs',
   footer: {
-    text: "Embedbase Docs",
+    text: 'Embedbase Docs'
   },
   search: {
-    component: <SearchModal />,
-  },
-};
+    component: <SearchModal />
+  }
+}
 
-export default config;
+export default config

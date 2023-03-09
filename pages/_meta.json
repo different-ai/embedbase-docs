@@ -1,8 +1,9 @@
 {
-  "index": " Start Here",
-  "basics": "🍊 Basics",
+  "index": "🏡 Start Here",
+  "sdk": "☕️ Javascript SDK",
+  "API": "📡 API",
   "tutorials": "❓ Tutorials",
-  "deployment": "🚚 Self-hosted",
+  "deployment": "🚚 Self-hosting",
   "login": {
     "title": "Login",
     "type": "page",
@@ -15,6 +16,5 @@
     "href": "https://embedbase.xyz",
     "newWindow": true
   },
-  "customisation": "🔨 Customisation",
-  "sdk": "SDK (coming soon)"
+  "customisation": "🔨 Customisation"
 }
