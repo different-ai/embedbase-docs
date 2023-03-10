@@ -14,6 +14,7 @@ npm i embedbase-js
 - [Installation](#installation)
 - [Searching](#fetching-embeddings)
 - [Adding data](#adding-data)
+- [Creating a context](#creating-a-context)
 - [Creating a recommendation engine with zero ML experience](#how-to-create-a-reccomendation-engine)
 
 ## Design philosophy
@@ -70,7 +71,7 @@ const url = 'https://api.embedbase.xyz'
 const embedbase = createClient(url, apiKey)
 ```
 
-### Fetching Embeddings
+### Searching datasets
 
 ```ts
 // fetching data
@@ -116,13 +117,34 @@ console.log(data)
 // }
 ```
 
+### Creating a "context"
+
+`createContext` is very similar to `.search` but it returns strings instead of an object. This is useful if you want to easily feed it to GPT.
+
+````js
+// you can create a context to store data
+const data = await embedbase
+  .dataset('amazon-reviews')
+  .createContext('my-context')
+
+console.log(data)
+// [
+   'response 1',
+    'response 2',
+    'response 3',
+// ]
+```
+
+
+
+
 ## How to create a reccomendation engine
 
 ```js
 coming soon
 
 
-```
+````
 
 ## How to do search engine
 
