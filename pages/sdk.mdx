@@ -121,18 +121,19 @@ console.log(data)
 
 `createContext` is very similar to `.search` but it returns strings instead of an object. This is useful if you want to easily feed it to GPT.
 
-````js
+```js
 // you can create a context to store data
 const data = await embedbase
-  .dataset('amazon-reviews')
+  .dataset('my-documentation')
   .createContext('my-context')
 
 console.log(data)
-// [
-   'response 1',
-    'response 2',
-    'response 3',
-// ]
+[
+ "Embedbase API allows to store unstructured data...",
+ "Embedbase API has 3 main functions a) provides a plug and play solution to store embeddings b) makes it easy to connect to get the right data into llms c)..",
+ "Embedabase API is self-hostable...",
+
+]
 ```
 
 
@@ -142,8 +143,6 @@ console.log(data)
 
 ```js
 coming soon
-
-
 ````
 
 ## How to do search engine
