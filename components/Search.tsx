@@ -242,7 +242,7 @@ export const EmbedbaseSearch = () => {
 
         {/* row oriented, centered, with a gap of 3 */}
         {!loading && output.length < 1 && (
-          <div className="flex	min-h-[300px] items-center justify-center text-sm font-semibold text-gray-400 border-dashed border-2 border-gray-300 rounded-md">
+          <div className="flex	min-h-[300px] items-center justify-center text-sm font-semibold text-gray-400  p-4 border border-gray-300 rounded-md">
             <QuestionSection />
           </div>
         )}

@@ -48,7 +48,7 @@ const config: DocsThemeConfig = {
   chat: {
     link: 'https://discord.gg/pMNeuGrDky'
   },
-  docsRepositoryBase: 'https://github.com/different-ai/embedbase-docs',
+  docsRepositoryBase: 'https://github.com/different-ai/embedbase-docs/tree/main',
   footer: {
     text: 'Embedbase Docs'
   },

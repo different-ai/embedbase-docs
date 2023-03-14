@@ -4,6 +4,7 @@
   "interface": "📡 API",
   "tutorials": "❓ Tutorials",
   "self-hosting": "🚚 Self-hosting",
+  "document-is-too-long": "API Errors",
   "login": {
     "title": "Login",
     "type": "page",
