@@ -36,35 +36,31 @@ sentry: YOUR_DSN
 Example production middlewares:
 
 - Playground Embedbase instance is [open source](https://github.com/another-ai/embedbase-hosted)
-- [Embedbase-ava](https://github.com/another-ai/embedbase-ava) serve hundreds of thousands of requests per day to [Obsidian users](https://app.anotherai.co/)
 
-Currently adding middleware is very similar to [how it is done in FastAPI](https://fastapi.tiangolo.com/tutorial/middleware).
+You can a custom middleware like this:
 
 ```py
-# MYROOTPROJECT/middlewares/my_custom_middleware/my_custom_middleware.py
-class MyCustomMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request: Request, call_next) -> Tuple[str, str]:
-        start_time = time.time()
-        response = await call_next(request)
-        process_time = time.time() - start_time
-        response.headers["X-Process-Time"] = str(process_time)
-        return response
-```
+settings = Settings(...)
 
-```dockerfile
-# MYROOTPROJECT/Dockerfile
-FROM ghcr.io/another-ai/embedbase:latest
-# if you have some custom dependencies
-# COPY requirements.txt requirements.txt
-# RUN pip install -r requirements.txt && rm requirements.txt
-COPY ./middlewares/my_custom_middleware/my_custom_middleware.py /app/middlewares/my_custom_middleware.py
-```
+async def process_time(request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    response.headers["X-Process-Time"] = str(process_time)
+    
+    return response
 
-```yaml
-# MYROOTPROJECT/config.yaml
-# ...
-middlewares:
-  - middlewares.my_custom_middleware.my_custom_middleware.MyCustomMiddleware
+app = (
+    get_app(settings)
+    .use(process_time)
+    .use(
+        supabase.client.Client(
+            settings.supabase_url,
+            settings.supabase_key,
+        )
+    )
+).run()
+
 ```
 
 ```bash
@@ -86,5 +82,3 @@ curl -X POST -H "Content-Type: application/json" -d '{"query": "Bob"}' http://lo
   }
 }
 ```
-
-Please see [examples](https://github.com/another-ai/embedbase/examples/simple-react-custom-middleware) for more details and a concrete example.
