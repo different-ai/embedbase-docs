@@ -13,7 +13,7 @@ create table documents (
     data text,
     embedding vector (1536),
     hash text,
-    dataset_id text
+    dataset_id text,
     user_id text
 );
 ```
@@ -86,25 +86,6 @@ CREATE OR REPLACE VIEW distinct_datasets AS
 SELECT dataset_id, user_id, COUNT(*) AS documents_count
 FROM documents
 GROUP BY dataset_id, user_id;
-```
-
-## Using Pinecone
-
-Create an index on https://app.pinecone.io/ and add the index name to the config.yaml file.
-
-```yaml
-vector_database: pinecone
-pinecone_index: '<get me here https://app.pinecone.io>'
-pinecone_environment: '<get me here https://app.pinecone.io>'
-pinecone_api_key: '<get me here https://app.pinecone.io>'
-openai_api_key: '<get me here https://platform.openai.com/account/api-keys>'
-openai_organization: '<get me here https://platform.openai.com/account/org-settings>'
-```
-
-🎉 Now you should be able to run Embedbase with Pinecone
-
-```bash
-docker-compose up
 ```
 
 ## Cloud Run deployment
