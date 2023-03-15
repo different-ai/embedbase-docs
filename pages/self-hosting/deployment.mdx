@@ -9,11 +9,12 @@ For any help or assistance with deployment, [book a demo](https://cal.com/potato
 
 ```sql
 create table documents (
-  id text primary key,
-  data text,
-  embedding vector (1536),
-  hash text,
-  namespace text
+    id text primary key,
+    data text,
+    embedding vector (1536),
+    hash text,
+    dataset_id text
+    user_id text
 );
 ```
 
@@ -24,7 +25,8 @@ create or replace function match_documents (
   query_embedding vector(1536),
   similarity_threshold float,
   match_count int,
-  query_namespace text
+  query_dataset_id text,
+  query_user_id text default null
 )
 returns table (
   id text,
@@ -44,7 +46,9 @@ begin
     documents.hash,
     documents.embedding
   from documents
-  where 1 - (documents.embedding <=> query_embedding) > similarity_threshold and query_namespace = documents.namespace
+  where 1 - (documents.embedding <=> query_embedding) > similarity_threshold
+    and query_dataset_id = documents.dataset_id
+    and (query_user_id is null or query_user_id = documents.user_id)
   order by documents.embedding <=> query_embedding
   limit match_count;
 end;
@@ -73,6 +77,15 @@ openai_organization: '<get me here https://platform.openai.com/account/org-setti
 
 ```bash
 docker-compose up
+```
+
+If you wish to use the `/datasets` endpoint, you should also create this view:
+
+```sql
+CREATE OR REPLACE VIEW distinct_datasets AS
+SELECT dataset_id, user_id, COUNT(*) AS documents_count
+FROM documents
+GROUP BY dataset_id, user_id;
 ```
 
 ## Using Pinecone
