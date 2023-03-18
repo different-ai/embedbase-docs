@@ -33,7 +33,14 @@ create table documents (
 );
 ```
 
-5. Create the search database function
+5. Enable row-level security (prevent client from read & write access to the db)
+
+```sql
+alter table documents
+  enable row level security;
+```
+
+6. Create the search database function
 
 ```sql
 create or replace function match_documents (
@@ -70,7 +77,7 @@ end;
 $$;
 ```
 
-6. Create the index
+7. Create the index
 
 ```sql
 create index on documents
@@ -78,7 +85,7 @@ using ivfflat (embedding vector_cosine_ops)
 with (lists = 100);
 ```
 
-7. Add the following to your config.yaml file
+8. Add the following to your config.yaml file
 
 ```yaml
 vector_database: supabase
