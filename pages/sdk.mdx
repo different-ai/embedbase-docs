@@ -20,6 +20,7 @@ npm i embedbase-js
 - [Adding data](#adding-data)
 - [Creating a "context"](#creating-a-context)
 - [Adding metadata](#adding-metadata)
+- [Listing datasets](#listing-datasets)
 - [Example: Ask question to any github doc](#ask-question-to-doc)
 - [Example: Create a recommendation engine with ChatGPT](#ask-question-to-doc)
 - [Example: Create a search engine with ChatGPT](#ask-question-to-doc)
@@ -146,6 +147,15 @@ console.log(data)
 //          Didn't put in dishwasher. Still perfect after many uses.",
 //   "metadata": {"category": "smallItems", "user": "bob"}
 // }
+```
+
+
+### Listing datasets
+
+```js
+const data = await embedbase.datasets()
+console.log(data)
+// [{"datasetId": "amazon-reviews", "documentsCount": 2}]
 ```
 
 ## Ask question to doc
