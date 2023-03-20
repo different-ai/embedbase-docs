@@ -129,15 +129,13 @@ console.log(data)
 
 ### Adding metadata
 
-### Adding Data
-
 ```js
 const data =
-  await // embeddings are extremely good for retrieving unstructured data
-  // in this example we store an unparsable html string
+  await
   embedbase.dataset('amazon-reviews').add(`
   <div>
     <span>Lightweight. Telescopic. Easy zipper case for storage. Didn't put in dishwasher. Still perfect after many uses.</span>
+    // metadata can be anything you want that will appear in the search results later
 `, {category: 'smallItems', user: 'bob'})
 
 console.log(data)
