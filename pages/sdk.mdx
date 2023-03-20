@@ -18,6 +18,8 @@ npm i embedbase-js
 - [Installation](#installation)
 - [Searching](#fetching-embeddings)
 - [Adding data](#adding-data)
+- [Creating a "context"](#creating-a-"context")
+- [Adding metadata](#adding-metadata)
 - [Example: Ask question to any github doc](#ask-question-to-doc)
 - [Example: Create a recommendation engine with ChatGPT](#ask-question-to-doc)
 - [Example: Create a search engine with ChatGPT](#ask-question-to-doc)
@@ -125,6 +127,28 @@ console.log(data)
 ]
 ```
 
+### Adding metadata
+
+### Adding Data
+
+```js
+const data =
+  await // embeddings are extremely good for retrieving unstructured data
+  // in this example we store an unparsable html string
+  embedbase.dataset('amazon-reviews').add(`
+  <div>
+    <span>Lightweight. Telescopic. Easy zipper case for storage. Didn't put in dishwasher. Still perfect after many uses.</span>
+`, {category: 'smallItems', user: 'bob'})
+
+console.log(data)
+//
+// {
+//   "id": "eiew823",
+//   "data": "Lightweight. Telescopic. Easy zipper case for storage.
+//          Didn't put in dishwasher. Still perfect after many uses.",
+//   "metadata": {"category": "smallItems", "user": "bob"}
+// }
+```
 
 ## Ask question to doc
 
