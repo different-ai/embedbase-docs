@@ -29,7 +29,8 @@ create table documents (
     embedding vector (1536),
     hash text,
     dataset_id text,
-    user_id text
+    user_id text,
+    metadata json
 );
 ```
 
@@ -55,7 +56,8 @@ returns table (
   data text,
   score float,
   hash text,
-  embedding vector(1536)
+  embedding vector(1536),
+  metadata json
 )
 language plpgsql
 as $$
@@ -66,7 +68,8 @@ begin
     documents.data,
     (1 - (documents.embedding <=> query_embedding)) as similarity,
     documents.hash,
-    documents.embedding
+    documents.embedding,
+    documents.metadata
   from documents
   where 1 - (documents.embedding <=> query_embedding) > similarity_threshold
     and query_dataset_id = documents.dataset_id
