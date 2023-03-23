@@ -52,9 +52,30 @@ fetch(`${URL}/v1/${DATASET_ID}`, {
 })
 ```
 
+
+### Delete data
+
+You can delete documents from a dataset like this:
+
+```ts
+const URL = 'https://api.embedbase.xyz'
+const DATASET_ID = 'people'
+const API_KEY = '<https://app.embedbase.xyz/signup>'
+fetch(`${URL}/v1/${DATASET_ID}`, {
+  method: 'DELETE',
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: 'Bearer ' + API_KEY
+  },
+  body: JSON.stringify({
+    ids: ["<some id>",]
+  })
+})
+```
+
 ### Delete dataset
 
-You can insert unstructured data into Embedbase to be indexed and searched.
+You can delete a dataset like this:
 
 ```ts
 const URL = 'https://api.embedbase.xyz'
