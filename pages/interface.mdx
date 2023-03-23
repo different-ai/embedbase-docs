@@ -13,7 +13,7 @@ There's two main operations you can do with Embedbase: search and insert.
 You can search unstructured data with Embedbase.
 
 ```ts
-const URL = 'https://embedbase-hosted-usx5gpslaq-uc.a.run.app'
+const URL = 'https://api.embedbase.xyz'
 const DATASET_ID = 'people'
 const API_KEY = '<https://app.embedbase.xyz/signup>'
 fetch(`${URL}/v1/${DATASET_ID}/search`, {
@@ -33,7 +33,7 @@ fetch(`${URL}/v1/${DATASET_ID}/search`, {
 You can insert unstructured data into Embedbase to be indexed and searched.
 
 ```ts
-const URL = 'https://embedbase-hosted-usx5gpslaq-uc.a.run.app'
+const URL = 'https://api.embedbase.xyz'
 const DATASET_ID = 'people'
 const API_KEY = '<https://app.embedbase.xyz/signup>'
 fetch(`${URL}/v1/${DATASET_ID}`, {
@@ -51,3 +51,20 @@ fetch(`${URL}/v1/${DATASET_ID}`, {
   })
 })
 ```
+
+### Delete dataset
+
+You can insert unstructured data into Embedbase to be indexed and searched.
+
+```ts
+const URL = 'https://api.embedbase.xyz'
+const DATASET_ID = 'people'
+const API_KEY = '<https://app.embedbase.xyz/signup>'
+fetch(`${URL}/v1/${DATASET_ID}/clear`, {
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: 'Bearer ' + API_KEY
+  },
+})
+```
+
