@@ -6,13 +6,32 @@ For any help or assistance with deployment, [book a demo](https://cal.com/potato
 
 ## Using Supabase
 
-1. Create a supabase project on https://supabase.com
+There are multiple ways to use Supabase, either [running it locally](https://supabase.com/docs/guides/cli/local-development) or using their hosted instance.
 
-2. Go to SQL Editor 
+First, create a supabase project on https://supabase.com.
+
+Then you can setup Supabase database either using Supabase UI or via [Supabase CLI](https://supabase.com/docs/guides/cli)
+
+### Using CLI
+
+```bash
+git clone https://github.com/different-ai/embedbase
+supabase init
+```
+
+Use the reset command here to reset the database to the current [migrations](https://github.com/different-ai/embedbase/tree/main/supabase/migrations).
+
+```bash
+supabase db reset
+
+
+### Using Supabase UI
+
+1. Go to SQL Editor 
 
 <Image src="/supabase-click-on-sqleditor.png" width={500} height={300} />
 
-3. Enable pgvector extension by running the following query
+2. Enable pgvector extension by running the following query
 
 ```sql
 create extension vector
@@ -20,7 +39,7 @@ with
   schema extensions;
 ```
 
-4. Run the following query to create the table
+3. Run the following query to create the table
 
 ```sql
 create table documents (
@@ -34,14 +53,14 @@ create table documents (
 );
 ```
 
-5. Enable row-level security (prevent client from read & write access to the db)
+4. Enable row-level security (prevent client from read & write access to the db)
 
 ```sql
 alter table documents
   enable row level security;
 ```
 
-6. Create the search database function
+5. Create the search database function
 
 ```sql
 create or replace function match_documents (
@@ -80,7 +99,7 @@ end;
 $$;
 ```
 
-7. Create the index
+6. Create the index
 
 ```sql
 create index on documents
@@ -88,7 +107,18 @@ using ivfflat (embedding vector_cosine_ops)
 with (lists = 100);
 ```
 
-8. Add the following to your config.yaml file
+7. Create a view for the /datasets endpoint
+
+```sql
+CREATE OR REPLACE VIEW distinct_datasets AS
+SELECT dataset_id, user_id, COUNT(*) AS documents_count
+FROM documents
+GROUP BY dataset_id, user_id;
+```
+
+### Setup your configuration file
+
+Add the following to your config.yaml file
 
 ```yaml
 vector_database: supabase
@@ -102,15 +132,6 @@ openai_organization: '<get me here https://platform.openai.com/account/org-setti
 
 ```bash
 docker-compose up
-```
-
-If you wish to use the `/datasets` endpoint, you should also create this view:
-
-```sql
-CREATE OR REPLACE VIEW distinct_datasets AS
-SELECT dataset_id, user_id, COUNT(*) AS documents_count
-FROM documents
-GROUP BY dataset_id, user_id;
 ```
 
 ## Cloud Run deployment
