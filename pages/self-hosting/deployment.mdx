@@ -25,9 +25,10 @@ import os
 from embedbase import get_app
 from embedbase.settings import Settings
 from embedbase.database.postgres_db import Postgres
+from embedbase.embedding.openai import OpenAI
 
-settings = Settings(vector_database="postgres", openai_api_key="<your key>")
-app = get_app(settings).use(Postgres()).run()
+settings = Settings(vector_database="postgres")
+app = get_app(settings).use(Postgres()).use(OpenAI("<your key>")).run()
 ```
 
 Run:
@@ -46,9 +47,10 @@ import os
 from embedbase import get_app
 from embedbase.settings import Settings
 from embedbase.database.supabase_db import Supabase
+from embedbase.embedding.openai import OpenAI
 
-settings = Settings(vector_database="supabase", openai_api_key="<your key>")
-app = get_app(settings).use(Supabase("<your url>", "<your key>")).run()
+settings = Settings(vector_database="supabase")
+app = get_app(settings).use(Supabase("<your url>", "<your key>")).use(OpenAI("<your key>")).run()
 ```
 
 There are multiple ways to use Supabase, either [running it locally](https://supabase.com/docs/guides/cli/local-development) or using their hosted instance.
