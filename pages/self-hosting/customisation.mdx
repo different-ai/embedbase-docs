@@ -18,20 +18,18 @@ sentry: YOUR_DSN
 
 #### Custom database
 
-You need to implement the abstract class `VectorDatabase` found [here](https://github.com/different-ai/embedbase/blob/main/embedbase/db.py) and then use it like:
+You need to implement the abstract class `VectorDatabase` found [here](https://github.com/different-ai/embedbase/blob/main/embedbase/database/base.py) and then use it like:
 
 ```py
 from embedbase import get_app
 
 from embedbase.settings import Settings
-from embedbase.supabase_db import Supabase
+from embedbase.database.supabase_db import Supabase
 from embedbase.embedding.openai import OpenAI
 
 from .my_custom_db import MyCustomDb
 
-settings = Settings(
-    # your config goes here, or use "get_settings" helper to use a config.yaml
-)
+settings = Settings()
 
 app = (
     get_app(settings)
@@ -53,12 +51,10 @@ You can a custom middleware like this:
 from embedbase import get_app
 
 from embedbase.settings import Settings
-from embedbase.postgres_db import Postgres
+from embedbase.database.postgres_db import Postgres
 from embedbase.embedding.openai import OpenAI
 
-settings = Settings(
-    # your config goes here, or use "get_settings" helper to use a config.yaml
-)
+settings = Settings()
 
 async def process_time(request, call_next):
     start_time = time.time()
@@ -95,4 +91,25 @@ curl -X POST -H "Content-Type: application/json" -d '{"query": "Bob"}' http://lo
     "x-process-time": "0.0001239776611328125"
   }
 }
+```
+
+#### Custom Embedder
+
+You need to implement the abstract class `Embedder` found [here](https://github.com/different-ai/embedbase/blob/main/embedbase/embedding/base.py) and then use it like:
+
+```py
+from embedbase import get_app
+
+from embedbase.settings import Settings
+from embedbase.database.postgres_db import Postgres
+
+from .my_custom_embedder import MyCustomEmbedder
+
+settings = Settings()
+
+app = (
+    get_app(settings)
+    .use(Postgres())
+    .use(MyCustomEmbedder())
+).run()
 ```
