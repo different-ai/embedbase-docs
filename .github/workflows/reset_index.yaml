@@ -14,9 +14,9 @@ jobs:
         with:
           node-version: 14
       - run: npm install
-      - run: node scripts/clear.js
+      - run: npm run clear
         env:
           EMBEDBASE_API_KEY: ${{ secrets.EMBEDBASE_API_KEY }}
-      - run: node scripts/sync.js
+      - run: npm run sync
         env:
           EMBEDBASE_API_KEY: ${{ secrets.EMBEDBASE_API_KEY }}

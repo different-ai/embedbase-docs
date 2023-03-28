@@ -1,63 +1,7 @@
 import React, { useState } from 'react'
 import { useTheme } from 'nextra-theme-docs'
-import ReactMarkdown from 'react-markdown'
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
-import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx'
-import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript'
-import scss from 'react-syntax-highlighter/dist/cjs/languages/prism/scss'
-import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash'
-import markdown from 'react-syntax-highlighter/dist/cjs/languages/prism/markdown'
-import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json'
-import rangeParser from 'parse-numeric-range'
-import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import { PrimaryButton } from './Button'
-
-SyntaxHighlighter.registerLanguage('tsx', tsx)
-SyntaxHighlighter.registerLanguage('typescript', typescript)
-SyntaxHighlighter.registerLanguage('scss', scss)
-SyntaxHighlighter.registerLanguage('bash', bash)
-SyntaxHighlighter.registerLanguage('markdown', markdown)
-SyntaxHighlighter.registerLanguage('json', json)
-
-const MarkdownComponents: object = {
-  code({ node, inline, className, ...props }) {
-    const match = /language-(\w+)/.exec(className || '')
-    const hasMeta = node?.data?.meta
-
-    const applyHighlights: object = (applyHighlights: number) => {
-      if (hasMeta) {
-        const RE = /{([\d,-]+)}/
-        const metadata = node.data.meta?.replace(/\s/g, '')
-        const strlineNumbers = RE?.test(metadata) ? RE?.exec(metadata)[1] : '0'
-        const highlightLines = rangeParser(strlineNumbers)
-        const highlight = highlightLines
-        const data: string = highlight.includes(applyHighlights)
-          ? 'highlight'
-          : null
-        return { data }
-      } else {
-        return {}
-      }
-    }
-
-    return match ? (
-      <SyntaxHighlighter
-        children={''}
-        style={oneDark}
-        // language={match[1]}
-        PreTag="div"
-        className="codeStyle"
-        // showLineNumbers={true}
-        wrapLines={hasMeta ? true : false}
-        useInlineStyles={true}
-        lineProps={applyHighlights}
-        {...props}
-      />
-    ) : (
-      <code className={className} {...props} />
-    )
-  }
-}
+import Markdown from './Markdown'
 
 const Modal = ({ children, open, onClose }) => {
   const theme = useTheme()
@@ -100,7 +44,7 @@ const Modal = ({ children, open, onClose }) => {
 const questions = [
   'What can you build with Embedbase?',
   'What is Embedbase?',
-  'How can I insert data into Embedbase in Javascript? (code block)'
+  'How can I insert data into Embedbase using the Javascript SDK?'
 ]
 
 const QuestionSection = () => {
@@ -262,9 +206,9 @@ export const EmbedbaseSearch = () => {
           </div>
         )}
         {!loading && output.length > 0 && (
-          <ReactMarkdown components={MarkdownComponents}>
+          <Markdown>
             {output}
-          </ReactMarkdown>
+          </Markdown>
         )}
       </div>
     </div>

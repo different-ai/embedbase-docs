@@ -1,47 +1,20 @@
-// import cors from "../../utils/cors";
-import { OpenAIStream, OpenAIStreamPayload } from "../../utils/OpenAIStream";
-import { get_encoding } from "@dqbd/tiktoken";
+import { splitText } from "embeddings-utils";
+import { createClient } from "embedbase-js";
 
-if (!process.env.OPENAI_API_KEY) {
-    throw new Error("Missing env var from OpenAI");
-}
+const datasetId = "embedbase-documentation";
+const url = "https://api.embedbase.xyz";
+const apiKey = process.env.EMBEDBASE_API_KEY!;
+const embedbase = createClient(url, apiKey);
 
-// Load the tokenizer which is designed to work with the embedding model
-const enc = get_encoding('cl100k_base');
-const url = "https://embedbase-hosted-usx5gpslaq-uc.a.run.app";
-const vaultId = "embedbase-documentation";
-const apiKey = process.env.EMBEDBASE_API_KEY;
+const createContext = async (question: string) => {
+  const results = await embedbase
+    .dataset(datasetId)
+    .createContext(question, { limit: 15 });
 
-const search = async (query: string) => {
-    return fetch(url + "/v1/" + vaultId + "/search", {
-        method: "POST",
-        headers: {
-            Authorization: "Bearer " + apiKey,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            query: query
-        })
-    }).then(response => response.json());
+  const mergedResults = results.join("\n");
+  const chunks = splitText(mergedResults, {});
+  return chunks[0];
 };
-
-const createContext = async (question: string, maxLen = 1800) => {
-    const searchResponse = await search(question);
-    console.log(searchResponse);
-    let curLen = 0;
-    const returns = [];
-    for (const similarity of searchResponse["similarities"]) {
-        const sentence = similarity["data"];
-        const nTokens = enc.encode(sentence).length;
-        curLen += nTokens + 4;
-        if (curLen > maxLen) {
-            break;
-        }
-        returns.push(sentence);
-    }
-    return returns.join("\n\n###\n\n");
-}
-
 
 export default async function buildPrompt(req, res) {
     const prompt = req.body.prompt;

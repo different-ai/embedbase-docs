@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "sync": "node scripts/sync.js",
+    "sync": "npx tsx ./scripts/sync.ts",
     "clear": "node scripts/clear.js"
   },
   "repository": {
@@ -21,7 +21,7 @@
   "homepage": "https://github.com/another-ai/embedbase-docs#readme",
   "dependencies": {
     "@dqbd/tiktoken": "^0.2.1",
-    "embedbase-js": "^1.1.0",
+    "embeddings-utils": "^0.2.2",
     "eventsource-parser": "^0.1.0",
     "next": "^13.1.0",
     "nextra": "2.2.14",
@@ -31,7 +31,7 @@
     "posthog-js": "^1.51.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-markdown": "^8.0.5",
+    "react-markdown": "^8.0.6",
     "react-syntax-highlighter": "^15.5.0"
   },
   "devDependencies": {
@@ -40,6 +40,7 @@
     "@types/react-syntax-highlighter": "^15.5.6",
     "autoprefixer": "^10.4.13",
     "dotenv": "^16.0.3",
+    "embedbase-js": "^1.6.0",
     "eslint": "^8.35.0",
     "eslint-plugin-tailwindcss": "^3.10.1",
     "glob": "^8.1.0",
