@@ -20,8 +20,7 @@
   },
   "homepage": "https://github.com/another-ai/embedbase-docs#readme",
   "dependencies": {
-    "@dqbd/tiktoken": "^0.2.1",
-    "embeddings-utils": "^0.2.2",
+    "embedbase-js": "1.7.1",
     "eventsource-parser": "^0.1.0",
     "next": "^13.1.0",
     "nextra": "2.2.14",
@@ -40,7 +39,6 @@
     "@types/react-syntax-highlighter": "^15.5.6",
     "autoprefixer": "^10.4.13",
     "dotenv": "^16.0.3",
-    "embedbase-js": "^1.6.0",
     "eslint": "^8.35.0",
     "eslint-plugin-tailwindcss": "^3.10.1",
     "glob": "^8.1.0",

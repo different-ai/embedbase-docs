@@ -1,5 +1,5 @@
 const fetch = require("node-fetch");
-
+// TODO: use embedbase-js and ts when it's supporting clear()
 const url = "https://embedbase-hosted-usx5gpslaq-uc.a.run.app";
 const vaultId = "embedbase-documentation";
 try {

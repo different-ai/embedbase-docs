@@ -1,8 +1,6 @@
 const glob = require("glob");
 const fs = require("fs");
-import { createClient } from 'embedbase-js'
-import { BatchAddDocument } from 'embedbase-js/dist/module/types';
-import { splitText } from 'embeddings-utils';
+import { createClient, splitText, BatchAddDocument } from 'embedbase-js'
 
 
 const datasetId = "embedbase-documentation";
@@ -21,21 +19,24 @@ const sync = async () => {
     // read all files under pages/* with .mdx extension
     // for each file, read the content
     const documents = glob.sync("pages/**/*.mdx").map((path) => ({
-        path: path.replace("pages/", "/").replace("index.mdx", "").replace(".mdx", ""),
+        url: "https://docs.embedbase.xyz" +
+            path.replace("pages/", "/").replace("index.mdx", "").replace(".mdx", ""),
         // content of the file
         data: fs.readFileSync(path, "utf-8")
     }));
     const chunks = []
     documents.map((document) =>
-        splitText(document.data, { maxTokens: 500, chunkOverlap: 200 }, async (chunk) => chunks.push({
+        splitText(document.data, { maxTokens: 500, chunkOverlap: 200 }, async ({chunk, start, end}) => chunks.push({
             data: chunk,
             metadata: {
-                path: document.path
+                url: document.url,
+                start,
+                end
             }
         }))
     )
 
-    console.log("Syncing " + chunks.map((d) => d.metadata.path).join(", "));
+    console.log("Syncing " + chunks.map((d) => d.metadata.url).join(", "));
 
     const batchSize = 100;
     // add to embedbase by batches of size 100
