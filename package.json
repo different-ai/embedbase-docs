@@ -22,7 +22,7 @@
   "dependencies": {
     "embedbase-js": "1.7.1",
     "eventsource-parser": "^0.1.0",
-    "next": "^13.1.0",
+    "next": "^13.2.4",
     "nextra": "2.2.14",
     "nextra-theme-docs": "2.2.14",
     "openai": "3.2",
