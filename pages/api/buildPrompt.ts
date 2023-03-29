@@ -1,5 +1,4 @@
-import { splitText } from "embeddings-utils";
-import { createClient } from "embedbase-js";
+import { createClient, splitText } from "embedbase-js";
 
 const datasetId = "embedbase-documentation";
 const url = "https://api.embedbase.xyz";
@@ -13,7 +12,7 @@ const createContext = async (question: string) => {
 
   const mergedResults = results.join("\n");
   const chunks = splitText(mergedResults, {});
-  return chunks[0];
+  return chunks[0].chunk;
 };
 
 export default async function buildPrompt(req, res) {
