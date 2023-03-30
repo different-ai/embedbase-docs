@@ -3,7 +3,10 @@ const fs = require("fs");
 import { createClient, BatchAddDocument } from 'embedbase-js'
 import { splitText } from 'embedbase-js/dist/main/split';
 
-const datasetId = "embedbase-documentation";
+
+const hash = (t: number): string =>
+    t.toString(36).replace(/[^a-z]+/g, '');
+
 try {
     require("dotenv").config();
 } catch (e) {
@@ -35,8 +38,11 @@ const sync = async () => {
             }
         }))
     )
+    // embedbase-doc-[hash of timestamp]
+    const datasetId = `embedbase-doc-${hash(new Date().getTime())}`
 
-    console.log("Syncing " + chunks.map((d) => d.metadata.path).join(", "));
+    console.log(`Syncing to ${datasetId} ${chunks.length} documents`);
+
 
     const batchSize = 100;
     // add to embedbase by batches of size 100
@@ -47,8 +53,10 @@ const sync = async () => {
             }
             return acc;
         }, []).map((chunk) => embedbase.dataset(datasetId).batchAdd(chunk))
-    ).catch(console.error)
-        .then((e) => console.log("done", e));
+    )
+        .then((e) => e.flat())
+        .then((e) => console.log(`Synced ${e.length} documents to ${datasetId}`))
+        .catch(console.error);
 }
 
 sync();
