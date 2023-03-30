@@ -1,5 +1,5 @@
 import { createClient } from "embedbase-js";
-import { splitText } from 'embedbase-js/split'
+import { splitText } from 'embedbase-js/src/split'
 
 const datasetId = "embedbase-documentation";
 const url = "https://api.embedbase.xyz";
