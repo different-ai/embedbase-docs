@@ -1,5 +1,5 @@
 import { createClient } from "embedbase-js";
-import { splitText } from 'embedbase-js/src/split'
+import { splitText } from 'embedbase-js/dist/main/split';
 
 const datasetId = "embedbase-documentation";
 const url = "https://api.embedbase.xyz";
@@ -17,10 +17,10 @@ const createContext = async (question: string) => {
 };
 
 export default async function buildPrompt(req, res) {
-    const prompt = req.body.prompt;
+  const prompt = req.body.prompt;
 
-    const context = await createContext(prompt);
-    const newPrompt = `Answer the question based on the context below, and if the question can't be answered based on the context, say "I don't know"\n\nContext: ${context}\n\n---\n\nQuestion: ${prompt}\nAnswer:`;
+  const context = await createContext(prompt);
+  const newPrompt = `Answer the question based on the context below, and if the question can't be answered based on the context, say "I don't know"\n\nContext: ${context}\n\n---\n\nQuestion: ${prompt}\nAnswer:`;
 
-    res.status(200).json({ prompt: newPrompt });
+  res.status(200).json({ prompt: newPrompt });
 }

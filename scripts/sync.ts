@@ -1,7 +1,7 @@
 const glob = require("glob");
 const fs = require("fs");
 import { createClient, BatchAddDocument } from 'embedbase-js'
-import { splitText } from 'embedbase-js/src/split'
+import { splitText } from 'embedbase-js/dist/main/split';
 
 const datasetId = "embedbase-documentation";
 try {

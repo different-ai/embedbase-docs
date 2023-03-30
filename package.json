@@ -11,16 +11,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/another-ai/embedbase-docs.git"
+    "url": "git+https://github.com/different-ai/embedbase-docs.git"
   },
   "author": "Embedbase",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/another-ai/embedbase-docs/issues"
+    "url": "https://github.com/different-ai/embedbase-docs/issues"
   },
-  "homepage": "https://github.com/another-ai/embedbase-docs#readme",
+  "homepage": "https://github.com/different-ai/embedbase-docs#readme",
   "dependencies": {
-    "embedbase-js": "1.7.7",
+    "embedbase-js": "^1.7.9",
     "eventsource-parser": "^0.1.0",
     "next": "^13.2.4",
     "nextra": "2.2.14",
