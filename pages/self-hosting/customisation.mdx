@@ -23,16 +23,13 @@ You need to implement the abstract class `VectorDatabase` found [here](https://g
 ```py
 from embedbase import get_app
 
-from embedbase.settings import Settings
 from embedbase.database.supabase_db import Supabase
 from embedbase.embedding.openai import OpenAI
 
 from .my_custom_db import MyCustomDb
 
-settings = Settings()
-
 app = (
-    get_app(settings)
+    get_app()
     .use(OpenAI("<your key>"))
     .use(MyCustomDb())
 ).run()
@@ -50,11 +47,8 @@ You can a custom middleware like this:
 ```py
 from embedbase import get_app
 
-from embedbase.settings import Settings
 from embedbase.database.postgres_db import Postgres
 from embedbase.embedding.openai import OpenAI
-
-settings = Settings()
 
 async def process_time(request, call_next):
     start_time = time.time()
@@ -65,7 +59,7 @@ async def process_time(request, call_next):
     return response
 
 app = (
-    get_app(settings)
+    get_app()
     .use(process_time)
     .use(OpenAI("<your key>"))
     .use(Postgres())
@@ -100,15 +94,12 @@ You need to implement the abstract class `Embedder` found [here](https://github.
 ```py
 from embedbase import get_app
 
-from embedbase.settings import Settings
 from embedbase.database.postgres_db import Postgres
 
 from .my_custom_embedder import MyCustomEmbedder
 
-settings = Settings()
-
 app = (
-    get_app(settings)
+    get_app()
     .use(Postgres())
     .use(MyCustomEmbedder())
 ).run()
