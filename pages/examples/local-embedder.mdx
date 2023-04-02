@@ -80,7 +80,7 @@ class LocalEmbedder(Embedder):
         :return: list of embeddings
         """
         embeddings = self.model.encode(input)
-        return embeddings.tolist()
+        return embeddings.tolist() if isinstance(input, list) else [embeddings.tolist()]
 
 app = (
     get_app()
