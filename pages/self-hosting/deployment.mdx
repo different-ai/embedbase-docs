@@ -28,12 +28,10 @@ Basic entrypoint that uses Postgres & OpenAI ([get your key](https://platform.op
 ```py filename="main.py"
 import os
 from embedbase import get_app
-from embedbase.settings import Settings
 from embedbase.database.postgres_db import Postgres
 from embedbase.embedding.openai import OpenAI
 
-settings = Settings(vector_database="postgres")
-app = get_app(settings).use_db(Postgres()).use_embedder(OpenAI("<your key>")).run()
+app = get_app().use_db(Postgres()).use_embedder(OpenAI("<your key>")).run()
 ```
 
 Run:
@@ -49,12 +47,10 @@ Basic entrypoint that uses Supabase & OpenAI ([get your key](https://platform.op
 ```py filename="main.py"
 import os
 from embedbase import get_app
-from embedbase.settings import Settings
 from embedbase.database.supabase_db import Supabase
 from embedbase.embedding.openai import OpenAI
 
-settings = Settings(vector_database="supabase")
-app = get_app(settings).use_db(Supabase("<your url>", "<your key>")).use_embedder(OpenAI("<your key>")).run()
+app = get_app().use_db(Supabase("<your url>", "<your key>")).use_embedder(OpenAI("<your key>")).run()
 ```
 
 There are multiple ways to use Supabase, either [running it locally](https://supabase.com/docs/guides/cli/local-development) or using their hosted instance.
