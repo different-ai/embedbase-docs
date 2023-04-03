@@ -30,8 +30,8 @@ from .my_custom_db import MyCustomDb
 
 app = (
     get_app()
-    .use(OpenAI("<your key>"))
-    .use(MyCustomDb())
+    .use_embedder(OpenAI("<your key>"))
+    .use_db(MyCustomDb())
 ).run()
 ```
 
@@ -60,9 +60,9 @@ async def process_time(request, call_next):
 
 app = (
     get_app()
-    .use(process_time)
-    .use(OpenAI("<your key>"))
-    .use(Postgres())
+    .use_middleware(process_time)
+    .use_embedder(OpenAI("<your key>"))
+    .use_db(Postgres())
 ).run()
 
 ```
@@ -100,7 +100,9 @@ from .my_custom_embedder import MyCustomEmbedder
 
 app = (
     get_app()
-    .use(Postgres())
-    .use(MyCustomEmbedder())
+    .use_db(Postgres())
+    .use_embedder(MyCustomEmbedder())
 ).run()
 ```
+
+Check this [example](https://docs.embedbase.xyz/examples/implement-a-local-first-embedbase).
