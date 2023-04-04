@@ -85,7 +85,7 @@ class LocalEmbedder(Embedder):
 app = (
     get_app()
     .use_embedder(LocalEmbedder())
-    .use_db(Postgres())
+    .use_db(Postgres(dimensions=384))
     .run()
 )
 
