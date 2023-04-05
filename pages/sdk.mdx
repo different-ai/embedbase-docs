@@ -118,7 +118,7 @@ import { splitText } from 'embedbase-js/dist/main/split';
 
 const text = 'some very long text...';
 splitText(text, { maxTokens: 500, chunkOverlap: 200 }, async ({ chunk, start, end }) =>
- embedbase.dataset('some-data-set').add(JSON.stringify(chunk))
+    embedbase.dataset('some-data-set').add(chunk)
 )
 ```
 
