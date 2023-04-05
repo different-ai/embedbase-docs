@@ -110,6 +110,19 @@ console.log(data)
 // }
 ```
 
+### Splitting and chunking large texts
+
+```js
+import { splitText } from 'embedbase-js/dist/main/split';
+
+const text = 'some very long text...';
+splitText(text, { maxTokens: 500, chunkOverlap: 200 }, async ({ chunk, start, end }) =>
+ embedbase.dataset('some-data-set').add(JSON.stringify(chunk))
+)
+```
+
+Check [how we send our documentation to Embedbase](https://github.com/different-ai/embedbase-docs/blob/cb082d5b54b1038bee73511d9b9046fbb22d8a6f/scripts/sync.ts) to let you ask it questions through GPT-4.
+
 ### Creating a "context"
 
 `createContext` is very similar to `.search` but it returns strings instead of an object. This is useful if you want to easily feed it to GPT.
