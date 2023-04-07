@@ -39,7 +39,9 @@ const sync = async () => {
         }))
     )
     // embedbase-doc-[hash of timestamp]
-    const datasetId = `embedbase-doc-${hash(new Date().getTime())}`
+    // const datasetId = `embedbase-doc-${hash(new Date().getTime())}`
+    // HACK: implement a way to always use latest version of dataset
+    const datasetId = `embedbase-documentation`
 
     console.log(`Syncing to ${datasetId} ${chunks.length} documents`);
 

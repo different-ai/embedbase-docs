@@ -171,6 +171,7 @@ export const EmbedbaseSearch = () => {
           style={{ minWidth: 'max-content' }}
           type="submit"
           className=""
+          disabled={loading}
         >
           Ask a question
         </PrimaryButton>
@@ -193,16 +194,7 @@ export const EmbedbaseSearch = () => {
         {loading && (
           <div className="flex	min-h-[300px] items-center justify-center text-sm font-semibold text-gray-400">
             <span>Loading...</span>
-            <div
-              style={{
-                width: '1rem',
-                height: '1rem',
-                border: '1px solid #e5e7eb',
-                borderRadius: '50%',
-                borderTopColor: 'black',
-                animation: 'spin 1s linear infinite'
-              }}
-            ></div>
+            <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-gray-900 ml-3"></div>
           </div>
         )}
         {!loading && output.length > 0 && (
