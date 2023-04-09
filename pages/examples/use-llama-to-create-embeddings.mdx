@@ -1,20 +1,16 @@
-# Implement a local first Embedbase
+# Use LLaMa to create embeddings
 
 ⚠️ This is not recommended for production. For server deployment, you should never run a model in Embedbase directly ([contact](louis@embedbase.xyz) to learn more) ⚠️
 
-A common concern of individuals and companies in the LLM era
-is that you need to send your data to a third-party.
+[LLaMa](https://arxiv.org/abs/2302.13971) is a large language model released by Facebook AI Research (FAIR) in 2023.
 
-Furthermore, this third-party is usually an American company which
-is subject to the jurisdiction of the United States.
-In the United States, the government has the right to access your data
-at any time.
+>We introduce LLaMA, a collection of foundation language models ranging from 7B to 65B parameters. We train our models on trillions of tokens, and show that it is possible to train state-of-the-art models using publicly available datasets exclusively, without resorting to proprietary and inaccessible datasets. In particular, LLaMA-13B outperforms GPT-3 (175B) on most benchmarks, and LLaMA-65B is competitive with the best models, Chinchilla-70B and PaLM-540B. We release all our models to the research community.
 
 In this example we will implement a local embedder for Embedbase which
-will respect your privacy concerns.
+will use the LLaMa model to create embeddings.
+Especially we're going to use the [Vicuna](https://vicuna.lmsys.org/).
 
-We will compute sentence embeddings using the awesome library
-[Sentence Transformers](https://www.sbert.net/).
+>We introduce Vicuna-13B, an open-source chatbot trained by fine-tuning LLaMA on user-shared conversations collected from ShareGPT. Preliminary evaluation using GPT-4 as a judge shows Vicuna-13B achieves more than 90%* quality of OpenAI ChatGPT and Google Bard while outperforming other models like LLaMA and Stanford Alpaca in more than 90%* of cases. The cost of training Vicuna-13B is around $300. The training and serving code, along with an online demo, are publicly available for non-commercial use.
 
 ## Installation
 
@@ -23,7 +19,7 @@ Install the required dependencies in a virtual environment:
 ```bash
 virtualenv env
 source env/bin/activate
-pip install embedbase pgvector psycopg[binary] sentence-transformers
+pip install embedbase pgvector psycopg[binary] llama-cpp-python
 ```
 
 ## Start Postgres as an Embedbase database
@@ -36,7 +32,18 @@ docker run -d --name pgvector -p 8080:8080 -p 5432:5432 \
     -v data:/var/lib/postgresql/data ankane/pgvector
 ```
 
-## Start Embedbase
+## Download a Llama model
+
+We will use a 4 bit quantized version of the Vicuna model to be able to run it on a CPU
+on consumer hardware.
+
+⚠️ Use this model at your own risk. ⚠️
+
+```bash
+wget https://huggingface.co/eachadea/ggml-vicuna-7b-4bit/resolve/main/ggml-vicuna-7b-4bit-rev1.bin
+```
+
+## Implement the Embedder & start embedbase
 
 Create a new file `main.py` with the following code:
 
@@ -46,17 +53,19 @@ from embedbase import get_app
 from embedbase.database.postgres_db import Postgres
 from embedbase.embedding.base import Embedder
 import uvicorn
-from sentence_transformers import SentenceTransformer
+import llama_cpp
+from llama_cpp import Llama
 
 
-class LocalEmbedder(Embedder):
-    EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+class LlamaEmbedder(Embedder):
+    EMBEDDING_MODEL = "ggml-vicuna-7b-4bit-rev1.bin"
 
     def __init__(
         self, model: str = EMBEDDING_MODEL, **kwargs
     ):
         super().__init__(**kwargs)
-        self.model = SentenceTransformer(model)
+        self.model = Llama(model_path=model, embedding=True)
+        self.model.create_embedding("Hello world!")
 
     @property
     def dimensions(self) -> int:
@@ -64,7 +73,7 @@ class LocalEmbedder(Embedder):
         Return the dimensions of the embeddings
         :return: dimensions of the embeddings
         """
-        return self._dimensions
+        return llama_cpp.llama_n_embd(self.model.ctx)
 
     def is_too_big(self, text: str) -> bool:
         """
@@ -73,7 +82,7 @@ class LocalEmbedder(Embedder):
         :param text: text to check
         :return: True if text is too big, False otherwise
         """
-        return len(text) > self.model.get_max_seq_length()
+        return len(text) > self.model.params.n_ctx
 
     async def embed(self, input: typing.Union[typing.List[str], str]) -> typing.List[typing.List[float]]:
         """
@@ -81,18 +90,18 @@ class LocalEmbedder(Embedder):
         :param texts: list of texts
         :return: list of embeddings
         """
-        embeddings = self.model.encode(input)
-        return embeddings.tolist() if isinstance(input, list) else [embeddings.tolist()]
+        return [self.model.embed(e) for e in input]
 
+embedder = LlamaEmbedder("ggml-vicuna-7b-4bit-rev1.bin")
 app = (
     get_app()
-    .use_embedder(LocalEmbedder())
-    .use_db(Postgres(dimensions=384))
+    .use_embedder(embedder)
+    .use_db(Postgres(dimensions=embedder.dimensions))
     .run()
 )
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", reload=True)
+    uvicorn.run("main:app")
 ```
 
 Start the Embedbase application with the following command:
