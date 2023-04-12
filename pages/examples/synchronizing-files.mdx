@@ -36,6 +36,7 @@ const baseUrl = "https://foo.com/"
 const sync = async () => {
     // read all files under pages/* with .mdx extension
     // for each file, read the content
+    // feel free to change the extension to suit your needs
     const documents = glob.sync("pages/**/*.mdx").map((path) => ({
         // optional, but recommended, it can be used to show reference to the original file
         // when you are searching.
